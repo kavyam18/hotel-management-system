@@ -1,0 +1,50 @@
+/* Reservation.css */
+
+/* Style for the table */
+.table-container {
+    width: 100%;
+    margin-top: 20px;
+   
+   
+  }
+  
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #ddd;
+  
+  }
+  
+  .table th, .table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+ 
+  }
+  
+  .table th {
+    background-color: #f2f2f2;
+  }
+  
+  .table tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  .table tr:hover {
+    background-color: #ddd;
+  }
+  
+  /* Style for buttons */
+  .button-container {
+    margin-top: 20px;
+  }
+  
+  .button {
+    margin-right: 10px;
+    color: blue;
+  }
+  
+  .clear-button {
+    margin-left: 20px;
+  }
+  

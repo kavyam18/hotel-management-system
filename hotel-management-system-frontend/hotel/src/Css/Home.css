@@ -1,0 +1,29 @@
+/* About css */
+.about-section {
+    background-color: #f8f9fa; /* Change this to your desired background color */
+  }
+  
+  .square-image img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+  }
+
+  /* Room Css */
+  .room-item {
+    background-color: #ffffff;
+    transition: transform 0.3s ease;
+  }
+  
+  .room-item:hover {
+    transform: translateY(-5px);
+  }
+  
+  .room-item img {
+    transition: transform 0.3s ease;
+  }
+  
+  .room-item:hover img {
+    transform: scale(1.1);
+  }
+  
