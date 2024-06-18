@@ -1,0 +1,10 @@
+.custom-navbar {
+    height: 100px; 
+}
+  .brand-text {
+    font-size: 54px;
+    color: #f3ecec; 
+    display: flex;
+    align-items: center; 
+  }
+  

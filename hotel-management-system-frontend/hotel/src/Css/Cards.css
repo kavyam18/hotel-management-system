@@ -1,0 +1,35 @@
+/* Cards.css */
+
+.card-container {
+    margin-top: 20px; /* Adjust margin-top as needed */
+    margin-bottom: 50px;
+  }
+  
+  .card {
+    width: 20rem; /* Increase the width */
+    height: 25rem; /* Increase the height */
+    border: 1px solid #ced4da; /* Add a border */
+    border-radius: 8px; /* Add some border radius for rounded corners */
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow */
+  }
+  .card-title {
+    font-weight: bold; /* Make the card title bold */
+  }
+  
+  .card-subtitle {
+    color: #6c757d; /* Change the color of the subtitle */
+  }
+  
+  .card-text {
+    color: #495057; /* Change the color of the text */
+  }
+  
+  .card-link {
+    color: #007bff; /* Change the color of the link */
+    text-decoration: none; /* Remove the default underline */
+  }
+  
+  .card-link:hover {
+    text-decoration: underline; /* Add underline on hover */
+  }
+  
