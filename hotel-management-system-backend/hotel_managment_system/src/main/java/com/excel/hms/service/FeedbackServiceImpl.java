@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import com.excel.hms.dto.FeedbackDto;
 import com.excel.hms.entity.Feedback;
 import com.excel.hms.entity.Guest;
-import com.excel.hms.exception.HotelException;
+import com.excel.hms.exception.GuestEmailNotFoundException;
 import com.excel.hms.repository.FeedbackRepository;
 import com.excel.hms.repository.GuestRepository;
 import com.excel.hms.util.ObjectUtil;
@@ -36,7 +36,7 @@ public class FeedbackServiceImpl implements FeedbackService {
 			feedbackRepository.save(contact);
 		     return GUEST_MESSAGE_SAVED_SUCCESS;
 	   }
-		throw new HotelException(GUEST_EMAILID_NOT_FOUND);
+		throw new GuestEmailNotFoundException(GUEST_EMAILID_NOT_FOUND);
 	}
 	
     //------------------Fetch all  Feedback-----------------------------

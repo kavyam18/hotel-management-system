@@ -7,7 +7,6 @@ public class AdminExistenceException extends RuntimeException {
 	public AdminExistenceException(String message) {
 		
 		super(message);
-
 	}
 }
 

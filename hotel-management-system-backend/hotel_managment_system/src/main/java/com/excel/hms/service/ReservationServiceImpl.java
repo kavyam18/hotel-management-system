@@ -16,7 +16,12 @@ import com.excel.hms.dto.ReservationDtoList;
 import com.excel.hms.entity.Guest;
 import com.excel.hms.entity.Reservation;
 import com.excel.hms.entity.Room;
-import com.excel.hms.exception.HotelException;
+import com.excel.hms.exception.GuestEmailNotFoundException;
+import com.excel.hms.exception.GuestExistenceException;
+import com.excel.hms.exception.ReservationCancelException;
+import com.excel.hms.exception.ReservationIdNotFoundException;
+import com.excel.hms.exception.ReservationsNotFetchException;
+import com.excel.hms.exception.RoomIdNotFoundException;
 import com.excel.hms.repository.GuestRepository;
 import com.excel.hms.repository.ReservationRepository;
 import com.excel.hms.repository.RoomRepository;
@@ -47,13 +52,13 @@ public class ReservationServiceImpl implements ReservationService {
 	            .findFirst();
 	        
 	        if (activeReservation.isPresent()) {
-	            throw new HotelException("Guest already has an active reservation.");
+	            throw new GuestExistenceException("Guest already has an active reservation.");
 	        } else {
 	            Reservation reservation = ObjectUtil.dtoToReservationEntity(dto);
 	            reservation.setGuest(guest);
 	            List<Room> roomsList = dto.getRooms().stream().map(roomId -> {
 	                Optional<Room> optionalRoom = roomRepository.findById(roomId);
-	                return optionalRoom.orElseThrow(() -> new HotelException("Room with ID " + roomId + " not found"));
+	                return optionalRoom.orElseThrow(() -> new RoomIdNotFoundException("Room with ID " + roomId + " not found"));
 	            }).toList();
 	            roomsList.forEach(room -> {
 	                room.setAvailable(false);
@@ -68,7 +73,7 @@ public class ReservationServiceImpl implements ReservationService {
 	            return RESERVATION_DETAILS_SAVED_MESSAGE;
 	        }
 	    } else {
-	        throw new HotelException(GUEST_EMAIL_NOTFOUND_MESSAGE);
+	        throw new GuestEmailNotFoundException(GUEST_EMAIL_NOTFOUND_MESSAGE);
 	    }
 	}
     //---------------------close reservation -----------------------------
@@ -98,7 +103,7 @@ public class ReservationServiceImpl implements ReservationService {
 	    if (optionalReservation.isPresent()) {
 	        Reservation reservation = optionalReservation.get();
 	        if (reservation.isCancelled() || reservation.isClosed()) {
-	            throw new HotelException("Reservation is already cancelled or closed.");
+	            throw new ReservationCancelException("Reservation is already cancelled or closed.");
 	        }
 	        List<Room> rooms = reservation.getRooms();
 	        rooms.forEach(room -> {
@@ -109,7 +114,7 @@ public class ReservationServiceImpl implements ReservationService {
 	        reservationRepository.save(reservation);
 	        roomRepository.saveAll(rooms);
 	    } else {
-	        throw new HotelException("Reservation not found with ID: " );
+	        throw new ReservationIdNotFoundException("Reservation not found with ID: " );
 	    }
 		return null;
 	}
@@ -122,7 +127,7 @@ public class ReservationServiceImpl implements ReservationService {
 			ReservationDto reservation1=ObjectUtil.ReservationEntityToDto(reservation);
 			return reservation1;
 		}
-		throw new HotelException(RESERVATION_NOTFOUND_MESSAGE);
+		throw new ReservationIdNotFoundException(RESERVATION_NOTFOUND_MESSAGE);
 	}
 	//---------------------Fetch all reservation----------------------
 	@Override
@@ -131,7 +136,7 @@ public class ReservationServiceImpl implements ReservationService {
 			return reservationRepository.findAll().stream()
 					.map(ObjectUtil::ReservationEntityToDto).toList();
 		} catch (Exception e) {
-			throw new HotelException("Failed to retrieve reservations: " + e.getMessage());
+			throw new ReservationsNotFetchException("Failed to retrieve reservations: " + e.getMessage());
 		}
 	}
 }
