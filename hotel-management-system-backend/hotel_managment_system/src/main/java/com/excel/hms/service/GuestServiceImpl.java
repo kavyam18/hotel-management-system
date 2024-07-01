@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.excel.hms.dto.GuestDto;
 import com.excel.hms.entity.Guest;
-import com.excel.hms.exception.HotelException;
+import com.excel.hms.exception.GuestEmailNotFoundException;
 import com.excel.hms.repository.GuestRepository;
 import com.excel.hms.util.ObjectUtil;
 
@@ -30,7 +30,7 @@ public class GuestServiceImpl implements GuestService {
 			Guest guest1=guestRepository.save(guest);
 			return guest1.getEmail();
 		}
-		throw new HotelException(GUEST_EMAIL_FOUND_MESSAGE);
+		throw new GuestEmailNotFoundException(GUEST_EMAIL_FOUND_MESSAGE);
 	}
 
 	//-------------------Fetch All Guest Details---------------------------
@@ -40,7 +40,7 @@ public class GuestServiceImpl implements GuestService {
 			return guestRepository.findAll().stream()
 					.map(ObjectUtil::GuestEntityToDto).toList();
 		} catch (Exception e) {
-			throw new HotelException("Failed to retrieve Guests: " + e.getMessage());
+			throw new GuestEmailNotFoundException("Failed to retrieve Guests: " + e.getMessage());
 		}
 	}
 
@@ -54,7 +54,7 @@ public class GuestServiceImpl implements GuestService {
 			Guest save=guestRepository.save(guest);
 			return ObjectUtil.GuestEntityToDto(save);
 		}
-		throw new HotelException(GUEST_EMAIL_NOTFOUND_MESSAGE);
+		throw new GuestEmailNotFoundException(GUEST_EMAIL_NOTFOUND_MESSAGE);
 	}
 
 	//----------------------Delete the guest------------------------
@@ -67,6 +67,6 @@ public class GuestServiceImpl implements GuestService {
 			guestRepository.delete(guest);
 			return GUEST_DETAILS_DELETED_MESSAGE;
 		}
-		throw new HotelException(GUEST_EMAIL_NOTFOUND_MESSAGE);
+		throw new GuestEmailNotFoundException(GUEST_EMAIL_NOTFOUND_MESSAGE);
 	}
 }

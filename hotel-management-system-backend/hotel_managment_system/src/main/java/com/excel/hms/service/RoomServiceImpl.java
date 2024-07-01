@@ -11,7 +11,8 @@ import org.springframework.stereotype.Service;
 
 import com.excel.hms.dto.RoomDto;
 import com.excel.hms.entity.Room;
-import com.excel.hms.exception.HotelException;
+import com.excel.hms.exception.RoomNumberNotFoundException;
+import com.excel.hms.exception.RoomsNotFetchException;
 import com.excel.hms.repository.RoomRepository;
 import com.excel.hms.util.ObjectUtil;
 
@@ -30,7 +31,7 @@ public class RoomServiceImpl implements RoomService {
 			Room room1=roomRepository.save(room);
 			return room1.getRoomNumber();
 		}
-		throw new HotelException(ROOMNUMBER_FOUND_MESSAGE);
+		throw new RoomNumberNotFoundException(ROOMNUMBER_FOUND_MESSAGE);
 	}
 
 	//------------------------Fetch room details by room number------------
@@ -42,7 +43,7 @@ public class RoomServiceImpl implements RoomService {
 			RoomDto room=ObjectUtil.RoomEntityToDto(rooms);
 			return room;
 		}
-		throw new HotelException(ROOMNUMBER_NOTFOUND_MESSAGE);
+		throw new RoomNumberNotFoundException(ROOMNUMBER_NOTFOUND_MESSAGE);
 	}
 
 	//--------------------------update the room details by room number-----------
@@ -55,7 +56,7 @@ public class RoomServiceImpl implements RoomService {
 			Room save=roomRepository.save(room);
 			return ObjectUtil.RoomEntityToDto(save);
 		}
-		throw new HotelException(ROOMNUMBER_NOTFOUND_MESSAGE);
+		throw new RoomNumberNotFoundException(ROOMNUMBER_NOTFOUND_MESSAGE);
 	}
 
 	//----------------------Fetch all rooms details-------------------
@@ -65,7 +66,7 @@ public class RoomServiceImpl implements RoomService {
 			return roomRepository.findAll().stream()
 					.map(ObjectUtil::RoomEntityToDto).toList();
 		} catch (Exception e) {
-			throw new HotelException("Failed to retrieve rooms: " + e.getMessage());
+			throw new RoomsNotFetchException("Failed to retrieve rooms: " + e.getMessage());
 		}
 	}
 }

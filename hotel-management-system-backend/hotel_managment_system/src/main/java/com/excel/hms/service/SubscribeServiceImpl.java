@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.excel.hms.dto.SubscribeDto;
 import com.excel.hms.entity.Subscribe;
-import com.excel.hms.exception.HotelException;
+import com.excel.hms.exception.DuplicateSubscriptionException;
 import com.excel.hms.repository.SubscribeRepository;
 
 @Service
@@ -28,7 +28,7 @@ public class SubscribeServiceImpl implements SubscribeService{
 			 Subscribe subscribes = subscribeRepository.save(subscribe);
 			return subscribes.getEmailId();
 		}
-		throw new HotelException(DUPLICATE_SUBSCRIPTION_MESSAGE);
+		throw new DuplicateSubscriptionException(DUPLICATE_SUBSCRIPTION_MESSAGE);
 	}
 
 	//------------------------Fetch all subscribers--------------------------
